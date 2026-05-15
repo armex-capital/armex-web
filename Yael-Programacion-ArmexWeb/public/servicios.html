@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios — Armex Capital</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    .srv-hero {
+      min-height: 38vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      background: linear-gradient(135deg, #0D1117 0%, #161B22 60%, #0D1117 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .srv-hero::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(15,11,119,0.2) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .srv-hero-content { position: relative; z-index: 1; }
+    .srv-hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.8rem;
+    }
+    .srv-hero p {
+      font-size: 1rem;
+      color: #8B949E;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid rgba(15,11,119,0.3);
+      border-radius: 4px;
+      color: #0f0b77;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      background: #fff;
+      transition: background 0.2s, color 0.2s;
+      position: absolute;
+      top: 1.4rem;
+      left: 2rem;
+      z-index: 10;
+    }
+    .back-btn:hover { background: #0f0b77; color: #fff; }
+
+    /* NAV SERVICIOS */
+    .srv-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 1.8rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .srv-nav a {
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #0f0b77;
+      border: 1px solid rgba(15,11,119,0.25);
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .srv-nav a:hover { background: #0f0b77; color: #fff; }
+
+    /* SECCIONES DE PRODUCTO */
+    .srv-section {
+      scroll-margin-top: 70px;
+    }
+    .srv-section:nth-child(odd)  { background: #0D1117; }
+    .srv-section:nth-child(even) { background: #F8F7F4; }
+
+    .srv-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .srv-section:nth-child(even) .srv-inner {
+      grid-template-columns: 1.4fr 1fr;
+    }
+    .srv-section:nth-child(even) .srv-text { order: 2; }
+    .srv-section:nth-child(even) .srv-visual { order: 1; }
+
+    /* TEXTO */
+    .srv-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #3d39c4;
+      margin-bottom: 0.8rem;
+    }
+    .srv-section:nth-child(odd) .srv-tag { color: #7b78e8; }
+
+    .srv-text h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .srv-section:nth-child(even) .srv-text h2 { color: #0f0b77; }
+
+    .srv-monto {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #7b78e8;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+    .srv-section:nth-child(even) .srv-monto { color: #3d39c4; }
+
+    .srv-text p {
+      font-size: 0.92rem;
+      color: #8B949E;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+    .srv-section:nth-child(even) .srv-text p { color: #555; }
+
+    .srv-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .srv-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.88rem;
+      color: #aaa;
+      line-height: 1.6;
+    }
+    .srv-section:nth-child(even) .srv-list li { color: #444; }
+    .srv-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #3d39c4;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+    .srv-section:nth-child(odd) .srv-list li::before { background: #7b78e8; }
+
+    .srv-ideal {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(61,57,196,0.25);
+      border-left: 3px solid #3d39c4;
+      padding: 0.6rem 1rem;
+      border-radius: 0 4px 4px 0;
+      margin-top: 1.2rem;
+    }
+    .srv-section:nth-child(even) .srv-ideal {
+      color: #0f0b77;
+      background: rgba(15,11,119,0.06);
+      border-left-color: #0f0b77;
+    }
+
+    .btn-cita-srv {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(135deg, #0f0b77, #3d39c4);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-cita-srv:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(15,11,119,0.4);
+    }
+
+    /* VISUAL CARD */
+    .srv-visual {
+      display: flex;
+      justify-content: center;
+    }
+    .srv-card-visual {
+      background: #161B22;
+      border: 1px solid rgba(61,57,196,0.3);
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      position: relative;
+    }
+    .srv-section:nth-child(even) .srv-card-visual {
+      background: #fff;
+      border-color: rgba(15,11,119,0.15);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+    .srv-card-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .srv-card-visual h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .srv-section:nth-child(even) .srv-card-visual h3 { color: #0f0b77; }
+    .srv-card-visual .monto-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #7b78e8;
+      border: 1px solid rgba(123,120,232,0.4);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+    }
+    .srv-section:nth-child(even) .srv-card-visual .monto-tag {
+      color: #0f0b77;
+      border-color: rgba(15,11,119,0.3);
+    }
+    .srv-card-visual .plazo-tag {
+      font-size: 0.78rem;
+      color: #8B949E;
+      margin-bottom: 1.5rem;
+    }
+    .srv-divider {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, #0f0b77, #3d39c4);
+      margin: 0 auto 1.2rem;
+      border-radius: 2px;
+    }
+    .srv-card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+    }
+    .srv-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: #8B949E;
+    }
+    .srv-section:nth-child(even) .srv-feature { color: #555; }
+    .srv-feature-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #3d39c4;
+      flex-shrink: 0;
+    }
+    .srv-section:nth-child(odd) .srv-feature-dot { background: #7b78e8; }
+
+    /* FOOTER SERVICIOS */
+    .srv-footer {
+      background: #070A0E;
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.8rem;
+      color: #444;
+    }
+    .srv-footer a {
+      color: #7b78e8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ANIMACIONES */
+    .srv-animate {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .srv-animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .srv-animate .srv-text,
+    .srv-animate .srv-visual {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .srv-animate.visible .srv-text {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.15s;
+    }
+    .srv-animate.visible .srv-visual {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.35s;
+    }
+
+    @media (max-width: 768px) {
+      .srv-inner { grid-template-columns: 1fr !important; gap: 2rem; }
+      .srv-section:nth-child(even) .srv-text,
+      .srv-section:nth-child(even) .srv-visual { order: unset; }
+      .srv-hero h1 { font-size: 1.8rem; }
+      .srv-card-visual { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="back-btn">← Volver al inicio</a>
+
+  <!-- HERO -->
+  <div class="srv-hero">
+    <div class="srv-hero-content">
+      <p class="hero-sub" style="margin-bottom:1rem;">Armex Capital</p>
+      <h1>Nuestros Servicios</h1>
+      <p>Cada servicio está diseñado para adaptarse a tu etapa patrimonial. Conoce cuál es el más adecuado para tus objetivos.</p>
+    </div>
+  </div>
+
+  <!-- NAV INTERNO -->
+  <nav class="srv-nav">
+    <a href="#capital-impulso">Capital Impulso</a>
+    <a href="#capital-planificado">Capital Planificado</a>
+    <a href="#capital-protegido">Capital Protegido</a>
+    <a href="#capital-superior">Capital Superior</a>
+  </nav>
+
+  <!-- CAPITAL IMPULSO -->
+  <section id="capital-impulso" class="srv-section srv-animate">
+    <div class="srv-inner">
+      <div class="srv-text">
+        <span class="srv-tag">Servicio 01</span>
+        <h2>Capital Impulso</h2>
+        <p class="srv-monto">Desde $5,000 MXN &nbsp;·&nbsp; 12 meses</p>
+        <p>Capital Impulso es la puerta de entrada al ecosistema patrimonial de Armex Capital. Diseñado para quienes dan sus primeros pasos en la construcción de su patrimonio, este servicio ofrece condiciones claras, un plazo definido y el respaldo de un contrato formal desde el primer día.</p>
+        <p>La simplicidad es su mayor fortaleza: un monto accesible, un plazo de 12 meses y una relación directa con nuestro equipo de asesores. Sin letra pequeña, sin sorpresas.</p>
+        <ul class="srv-list">
+          <li>Contrato de Mutuo Mercantil con respaldo legal completo</li>
+          <li>Plazo fijo de 12 meses con condiciones pactadas desde el inicio</li>
+          <li>Atención personalizada durante toda la vigencia del contrato</li>
+          <li>Acceso a estados de cuenta periódicos</li>
+          <li>Proceso de alta 100% documentado y transparente</li>
+        </ul>
+        <div class="srv-ideal">💡 Ideal para: personas que inician su camino patrimonial y buscan una primera experiencia segura y estructurada.</div>
+        <a href="/#citas" class="btn-cita-srv">Agendar una cita</a>
+      </div>
+      <div class="srv-visual">
+        <div class="srv-card-visual">
+          <div class="srv-card-icon">🚀</div>
+          <h3>Capital Impulso</h3>
+          <span class="monto-tag">Desde $5,000 MXN</span>
+          <p class="plazo-tag">Plazo: 12 meses</p>
+          <div class="srv-divider"></div>
+          <div class="srv-card-features">
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Contrato formal garantizado</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Condiciones fijas desde el inicio</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Asesor personal asignado</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Proceso de alta digital</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Seguimiento periódico</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPITAL PLANIFICADO -->
+  <section id="capital-planificado" class="srv-section srv-animate">
+    <div class="srv-inner">
+      <div class="srv-text">
+        <span class="srv-tag">Servicio 02</span>
+        <h2>Capital Planificado</h2>
+        <p class="srv-monto">Desde $20,000 MXN &nbsp;·&nbsp; 6 a 36 meses</p>
+        <p>Capital Planificado es nuestro servicio más flexible. Está pensado para personas que ya tienen un objetivo financiero claro: un viaje, la entrada de una propiedad, el fondo de un negocio o simplemente hacer crecer su ahorro de forma estructurada en un horizonte de tiempo determinado.</p>
+        <p>La clave de este servicio es la planificación: tú decides el plazo que mejor se adapta a tus metas y nosotros estructuramos las condiciones en torno a ese compromiso. A mayor plazo y compromiso, mejores son las condiciones pactadas.</p>
+        <ul class="srv-list">
+          <li>Plazos flexibles de 6 hasta 36 meses</li>
+          <li>Condiciones mejoradas conforme aumenta el plazo seleccionado</li>
+          <li>Pagos periódicos durante la vigencia o al vencimiento, según se acuerde</li>
+          <li>Contrato de Mutuo Mercantil adaptado al plazo elegido</li>
+          <li>Revisión y renovación disponible al vencimiento</li>
+          <li>Acompañamiento de asesor especializado en planificación patrimonial</li>
+        </ul>
+        <div class="srv-ideal">💡 Ideal para: personas con metas financieras a mediano plazo que buscan un instrumento estructurado con condiciones competitivas.</div>
+        <a href="/#citas" class="btn-cita-srv">Agendar una cita</a>
+      </div>
+      <div class="srv-visual">
+        <div class="srv-card-visual">
+          <div class="srv-card-icon">📈</div>
+          <h3>Capital Planificado</h3>
+          <span class="monto-tag">Desde $20,000 MXN</span>
+          <p class="plazo-tag">Plazo: 6 a 36 meses</p>
+          <div class="srv-divider"></div>
+          <div class="srv-card-features">
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Plazos a tu medida</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Mejores condiciones a mayor plazo</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Pagos periódicos o al vencimiento</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Renovación disponible</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Asesor de planificación patrimonial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPITAL PROTEGIDO -->
+  <section id="capital-protegido" class="srv-section srv-animate">
+    <div class="srv-inner">
+      <div class="srv-text">
+        <span class="srv-tag">Servicio 03</span>
+        <h2>Capital Protegido</h2>
+        <p class="srv-monto">Desde $20,000 MXN &nbsp;·&nbsp; 12 meses</p>
+        <p>Capital Protegido está diseñado para quienes priorizan la seguridad de su capital por encima de todo. La premisa es simple: al vencimiento del contrato, tu capital regresa íntegro. Durante la vigencia, recibes pagos periódicos acordados que representan el beneficio del servicio.</p>
+        <p>Este servicio es ideal para perfiles conservadores o para aquellas personas que destinan recursos que no pueden comprometer: un fondo de emergencia que trabaja, el ahorro de un familiar o recursos que necesitan mantenerse disponibles en un horizonte específico.</p>
+        <ul class="srv-list">
+          <li>Capital 100% resguardado y devuelto íntegro al vencimiento</li>
+          <li>Pagos periódicos durante los 12 meses de vigencia</li>
+          <li>Condiciones de pago pactadas y documentadas desde el inicio</li>
+          <li>Contrato de Mutuo Mercantil con cláusula explícita de reintegro</li>
+          <li>Perfil ideal para patrimonio conservador o recursos de reserva</li>
+          <li>Sin exposición al riesgo de pérdida del capital principal</li>
+        </ul>
+        <div class="srv-ideal">💡 Ideal para: perfiles conservadores, fondos de reserva o quienes quieren generar beneficios sin comprometer el capital inicial.</div>
+        <a href="/#citas" class="btn-cita-srv">Agendar una cita</a>
+      </div>
+      <div class="srv-visual">
+        <div class="srv-card-visual">
+          <div class="srv-card-icon">🛡️</div>
+          <h3>Capital Protegido</h3>
+          <span class="monto-tag">Desde $20,000 MXN</span>
+          <p class="plazo-tag">Plazo: 12 meses</p>
+          <div class="srv-divider"></div>
+          <div class="srv-card-features">
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Capital 100% resguardado</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Devolución íntegra al vencimiento</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Pagos periódicos acordados</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Sin riesgo sobre capital principal</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Contrato con cláusula de reintegro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPITAL SUPERIOR -->
+  <section id="capital-superior" class="srv-section srv-animate">
+    <div class="srv-inner">
+      <div class="srv-text">
+        <span class="srv-tag">Servicio 04</span>
+        <h2>Capital Superior</h2>
+        <p class="srv-monto">Desde $1,000,000 MXN &nbsp;·&nbsp; Condiciones a medida</p>
+        <p>Capital Superior es nuestro servicio de más alto nivel. Está diseñado exclusivamente para clientes de alto patrimonio que buscan condiciones premium, atención diferenciada y una gestión verdaderamente personalizada de sus recursos.</p>
+        <p>En este nivel, no hay un esquema estándar: cada contrato es el resultado de una negociación directa entre el cliente y el equipo directivo de Armex Capital. Se diseña un plan patrimonial a la medida, considerando los objetivos, el horizonte de tiempo, las necesidades de liquidez y el perfil de cada cliente.</p>
+        <ul class="srv-list">
+          <li>Acceso directo al equipo directivo de Armex Capital</li>
+          <li>Condiciones, plazos y estructura contractual completamente personalizadas</li>
+          <li>Asesoría patrimonial integral y continua</li>
+          <li>Reportes detallados y estados de cuenta en el formato que el cliente requiera</li>
+          <li>Posibilidad de estructurar esquemas multi-contrato o por etapas</li>
+          <li>Confidencialidad total en todos los términos del acuerdo</li>
+        </ul>
+        <div class="srv-ideal">💡 Ideal para: clientes de alto patrimonio que requieren un servicio completamente personalizado, condiciones premium y atención ejecutiva directa.</div>
+        <a href="/#citas" class="btn-cita-srv">Agendar una cita</a>
+      </div>
+      <div class="srv-visual">
+        <div class="srv-card-visual">
+          <div class="srv-card-icon">💎</div>
+          <h3>Capital Superior</h3>
+          <span class="monto-tag">Desde $1,000,000 MXN</span>
+          <p class="plazo-tag">Plazo y condiciones personalizadas</p>
+          <div class="srv-divider"></div>
+          <div class="srv-card-features">
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Atención ejecutiva directa</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Estructura contractual a medida</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Asesoría patrimonial integral</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Reportes personalizados</div>
+            <div class="srv-feature"><div class="srv-feature-dot"></div>Máxima confidencialidad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.srv-animate').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- FOOTER -->
+  <div class="srv-footer">
+    <p>&copy; 2026 Armex Capital, S.A.P.I. de C.V. &nbsp;|&nbsp; <a href="/#contacto">Contacto</a> &nbsp;|&nbsp; <a href="javascript:history.back()">Volver</a></p>
+  </div>
+
+</body>
+</html>

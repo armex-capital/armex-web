@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Armex Capital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f4f5fb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 32px rgba(15,11,119,0.10);
+      width: 100%;
+      max-width: 640px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: #0f0b77;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .card-header h1 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .card-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.72rem;
+      margin-top: 2px;
+    }
+    .card-body { padding: 2rem; }
+
+    /* LOGIN */
+    #login-view label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    #login-view input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    #login-view input:focus { border-color: #0f0b77; }
+    #login-error {
+      color: #c0392b;
+      font-size: 0.78rem;
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+    }
+    .btn-primary {
+      margin-top: 1.25rem;
+      width: 100%;
+      background: #0f0b77;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.85rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: #1c178a; }
+    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+
+    /* PANEL */
+    #panel-view { display: none; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #0f0b77;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #eee;
+    }
+    .slots-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .slot-toggle {
+      position: relative;
+    }
+    .slot-toggle input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slot-toggle label {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #aaa;
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+    }
+    .slot-toggle input:checked + label {
+      border-color: #0f0b77;
+      background: #0f0b77;
+      color: #fff;
+    }
+    .save-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    .save-bar button {
+      background: #0f0b77;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .save-bar button:hover { background: #1c178a; }
+    .save-bar button:disabled { background: #aaa; cursor: not-allowed; }
+    #save-msg {
+      font-size: 0.8rem;
+      font-weight: 600;
+      min-height: 1.2em;
+    }
+    .success { color: #27ae60; }
+    .error-msg { color: #c0392b; }
+    .logout-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
+      margin-left: auto;
+      text-decoration: underline;
+    }
+    .logout-btn:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <div>
+      <h1>Panel de Administración</h1>
+      <p>Armex Capital — Gestión de horarios</p>
+    </div>
+    <button class="logout-btn" id="logout-btn" style="display:none;" onclick="logout()">Cerrar sesión</button>
+  </div>
+
+  <div class="card-body">
+
+    <!-- LOGIN -->
+    <div id="login-view">
+      <label for="pwd-input">Contraseña</label>
+      <input type="password" id="pwd-input" placeholder="••••••••••" autocomplete="current-password" />
+      <div id="login-error"></div>
+      <button class="btn-primary" id="login-btn" onclick="doLogin()">Ingresar</button>
+    </div>
+
+    <!-- PANEL -->
+    <div id="panel-view">
+      <p class="section-label">Horarios entre semana (Lun – Vie)</p>
+      <div class="slots-grid" id="weekday-slots"></div>
+
+      <p class="section-label">Horarios sábado</p>
+      <div class="slots-grid" id="saturday-slots"></div>
+
+      <div class="save-bar">
+        <button id="save-btn" onclick="saveConfig()">Guardar cambios</button>
+        <span id="save-msg"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const ALL_HOURS = [8,9,10,11,12,13,14,15,16,17,18];
+  let token = sessionStorage.getItem('admin_token') || null;
+
+  function formatHour(h) {
+    const period = h < 12 ? 'a.m.' : 'p.m.';
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    return `${String(h12).padStart(2,'0')}:00 ${period}`;
+  }
+
+  function buildSlotToggles(containerId, activeHours) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    ALL_HOURS.forEach(h => {
+      const wrap = document.createElement('div');
+      wrap.className = 'slot-toggle';
+      const id = `${containerId}-${h}`;
+      const checked = activeHours.includes(h) ? 'checked' : '';
+      wrap.innerHTML = `
+        <input type="checkbox" id="${id}" value="${h}" ${checked} />
+        <label for="${id}">${formatHour(h)}</label>
+      `;
+      container.appendChild(wrap);
+    });
+  }
+
+  function getChecked(containerId) {
+    return [...document.querySelectorAll(`#${containerId} input:checked`)]
+      .map(i => Number(i.value));
+  }
+
+  async function doLogin() {
+    const pwd = document.getElementById('pwd-input').value;
+    const btn = document.getElementById('login-btn');
+    const errEl = document.getElementById('login-error');
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+    errEl.textContent = '';
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd }),
+      });
+      if (res.ok) {
+        token = pwd;
+        sessionStorage.setItem('admin_token', token);
+        showPanel();
+      } else {
+        errEl.textContent = 'Contraseña incorrecta. Intenta de nuevo.';
+        btn.disabled = false;
+        btn.textContent = 'Ingresar';
+      }
+    } catch {
+      errEl.textContent = 'Error de conexión.';
+      btn.disabled = false;
+      btn.textContent = 'Ingresar';
+    }
+  }
+
+  async function showPanel() {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('panel-view').style.display = 'block';
+    document.getElementById('logout-btn').style.display = 'inline';
+
+    const res = await fetch('/api/admin/config', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) { logout(); return; }
+    const config = await res.json();
+    buildSlotToggles('weekday-slots', config.weekday || []);
+    buildSlotToggles('saturday-slots', config.saturday || []);
+  }
+
+  async function saveConfig() {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.disabled = true;
+    msg.textContent = 'Guardando...';
+    msg.className = '';
+
+    const weekday = getChecked('weekday-slots').sort((a,b) => a-b);
+    const saturday = getChecked('saturday-slots').sort((a,b) => a-b);
+
+    try {
+      const res = await fetch('/api/admin/config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ weekday, saturday }),
+      });
+      if (res.ok) {
+        msg.textContent = 'Cambios guardados correctamente.';
+        msg.className = 'success';
+      } else if (res.status === 401) {
+        logout();
+      } else {
+        msg.textContent = 'Error al guardar.';
+        msg.className = 'error-msg';
+      }
+    } catch {
+      msg.textContent = 'Error de conexión.';
+      msg.className = 'error-msg';
+    }
+
+    btn.disabled = false;
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  }
+
+  function logout() {
+    sessionStorage.removeItem('admin_token');
+    token = null;
+    document.getElementById('login-view').style.display = 'block';
+    document.getElementById('panel-view').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+    document.getElementById('pwd-input').value = '';
+  }
+
+  document.getElementById('pwd-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  if (token) showPanel();
+</script>
+</body>
+</html>
