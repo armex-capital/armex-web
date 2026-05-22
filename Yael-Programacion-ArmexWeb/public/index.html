@@ -6,13 +6,14 @@
   <title>Armex Capital — Crecimiento Patrimonial con Confianza</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
   <!-- NAV -->
   <nav>
     <div class="nav-container">
-      <div class="logo">Armex <span>Capital</span></div>
+      <div class="logo"><img src="armex-logo.png" alt="Armex Capital" style="height:60px;display:block;"></div>
       <ul class="nav-links">
         <li><a href="#nosotros">Sobre Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
@@ -80,7 +81,7 @@
           <ul class="paso-list">
             <li>Transferencia bancaria directa</li>
             <li>Acuse de recibo del depósito</li>
-            <li>El plazo inicia al validar el depósito</li>
+            <li>El plazo inicia al firmar el contrato</li>
             <li>Informes mensuales de monitoreo de cuenta</li>
           </ul>
           <p class="paso-nota">De manera periódica enviamos informes mensuales para el monitoreo de la cuenta del cliente. Recibirás un acuse en cuanto se acredite el capital, quedando activo tu contrato desde ese momento.</p>
@@ -123,7 +124,7 @@
         <div class="nosotros-item">
           <div class="nosotros-icon">📍</div>
           <h4>Presencia local</h4>
-          <p>Con oficinas en Cuernavaca, Morelos, estamos cerca de nuestros clientes para brindar atención presencial cuando se necesite.</p>
+          <p>Contamos con oficinas en Cuernavaca, Morelos, estamos cerca de nuestros clientes para brindar atención presencial cuando se necesite.</p>
         </div>
         <div class="nosotros-item">
           <div class="nosotros-icon">🔒</div>
@@ -314,7 +315,7 @@
           </button>
           <div class="faq-answer">
             <p>Sí. Operamos bajo <strong>Contratos de Mutuo Mercantil</strong> con plena validez jurídica en territorio mexicano, lo que significa que el acuerdo entre tú y Armex Capital tiene respaldo legal ante cualquier instancia. El contrato es el instrumento que protege tanto tu capital como tus derechos como cliente.</p>
-            <p style="margin-top:0.65rem;">En materia de datos personales, cumplimos con la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong>. Contamos con medidas administrativas, técnicas y físicas para resguardar tu información, y puedes ejercer tus derechos ARCO en cualquier momento. Consulta nuestro <a href="#" onclick="openModal('modal-privacidad');return false;" style="color:#9b95ff;">Aviso de Privacidad</a> para mayor detalle.</p>
+            <p style="margin-top:0.65rem;">En materia de datos personales, cumplimos con la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong>. Contamos con medidas administrativas, técnicas y físicas para resguardar tu información, y puedes ejercer tus derechos ARCO en cualquier momento.</p>
           </div>
         </div>
 
@@ -374,11 +375,24 @@
             <p class="slots-label">Tus datos</p>
             <input class="cita-input" type="text" id="cita-nombre" placeholder="Nombre completo" required />
             <input class="cita-input" type="tel" id="cita-tel" placeholder="Teléfono o WhatsApp" required />
+            <input class="cita-input" type="email" id="cita-email" placeholder="Correo electrónico" required />
+            <select class="cita-input" id="cita-servicio" required>
+              <option value="" disabled selected>Producto de interés</option>
+              <option value="Capital Impulso">Capital Impulso</option>
+              <option value="Capital Planificado">Capital Planificado</option>
+              <option value="Capital Protegido">Capital Protegido</option>
+              <option value="Capital Superior Planificado">Capital Superior Planificado</option>
+              <option value="Capital Superior Protegido">Capital Superior Protegido</option>
+              <option value="Capital Familiar Planificado">Capital Familiar Planificado</option>
+              <option value="Capital Familiar Protegido">Capital Familiar Protegido</option>
+              <option value="Por definir">Por definir</option>
+            </select>
             <button type="submit" class="btn-cita">Confirmar cita por WhatsApp</button>
           </form>
           <div id="cita-confirm" class="cita-confirm" style="display:none;">
             <div class="confirm-icon">✓</div>
             <p class="confirm-text">¡Cita agendada! Te contactaremos para confirmar.</p>
+            <p style="font-size:0.78rem;color:#888;margin-top:0.5rem;text-align:center;">💡 Para visualizar correctamente el correo de confirmación, te recomendamos desactivar el <strong>modo oscuro</strong> en tu dispositivo.</p>
             <button class="btn-cita-outline" onclick="resetCita()">Agendar otra cita</button>
           </div>
         </div>
@@ -394,7 +408,7 @@
       <p>Armex Capital, S.A.P.I. de C.V.</p>
       <p>Cuernavaca, Morelos, México</p>
       <p class="footer-note">Los contratos están sujetos a los términos del Contrato de Mutuo Mercantil. Los rendimientos pasados no garantizan resultados futuros.</p>
-      <p class="footer-copy">&copy; 2026 Armex Capital. Todos los derechos reservados. &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openPrivacy(event)">Aviso de Privacidad</a> &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openArco(event)">Derechos ARCO</a> &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openBeneficiarios(event)">Reclamo de Beneficiarios</a> &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openBiometricos(event)">Autorización Datos Biométricos</a></p>
+      <p class="footer-copy">&copy; 2026 Armex Capital. Todos los derechos reservados. &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openArco(event)">Derechos ARCO</a> &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openBeneficiarios(event)">Reclamo de Beneficiarios</a> &nbsp;|&nbsp; <a href="#" class="footer-link" onclick="openBiometricos(event)">Autorización Datos Biométricos</a></p>
     </div>
   </footer>
 
@@ -582,72 +596,32 @@
     </div>
   </div>
 
-  <!-- MODAL AVISO DE PRIVACIDAD -->
-  <div id="privacy-modal" class="modal-overlay" onclick="closePrivacyOutside(event)">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closePrivacy()">✕</button>
-      <h2 class="modal-title">Aviso de Privacidad Integral</h2>
-
-      <p><strong>ARMEX CAPITAL S.A.P.I. de C.V.</strong> con domicilio en Av. De Los 50 Mts. 100 torre 3 piso 7 Villas Del Lago, C.P. 62374, Cuernavaca, Morelos, es el responsable del uso y protección de sus datos personales.</p>
-
-      <h3>Datos Personales</h3>
-      <p>Para llevar a cabo las finalidades descritas en el presente aviso, recabaremos los siguientes datos:</p>
-      <ul>
-        <li><strong>Identificación:</strong> Nombre completo, nacionalidad, RFC, CURP e identificación oficial vigente.</li>
-        <li><strong>Contacto:</strong> Domicilio completo, correo electrónico y número telefónico.</li>
-        <li><strong>Patrimoniales y Financieros:</strong> Información sobre cuentas bancarias (CLABE), origen de los recursos y capacidad económica/perfil patrimonial.</li>
-        <li><strong>Digitales y Biométricos:</strong> En caso de utilizar firma electrónica, se recabarán direcciones IP, marcas de tiempo, metadatos de trazabilidad y rasgos biométricos conforme a la NOM-151-SCFI-2016.</li>
-      </ul>
-
-      <h3>Finalidades del Tratamiento</h3>
-      <p>Finalidades necesarias para el servicio:</p>
-      <ul>
-        <li>Formalizar la relación jurídica mediante la celebración del Contrato de Mandato sin Representación.</li>
-        <li>Gestión, administración y colocación de recursos en instrumentos financieros.</li>
-        <li>Verificar y acreditar el lícito origen de los recursos conforme a la LFPIORPI.</li>
-        <li>Dar cumplimiento a obligaciones de pago de rendimientos y reintegro de capital.</li>
-        <li>Garantizar la integridad y conservación de los documentos firmados mediante medios electrónicos.</li>
-      </ul>
-      <p><strong>Finalidades Secundarias:</strong> Campañas de fidelidad y publicidad de nuevos servicios. Para oponerse, envíe un correo a <strong>atclientes@armexcapital.com</strong>. La negativa no afectará los servicios contratados.</p>
-
-      <h3>Transferencia de Datos</h3>
-      <ul>
-        <li><strong>Autoridades Competentes:</strong> Por requerimiento legal o auditorías de prevención de lavado de dinero.</li>
-        <li><strong>Terceros Auxiliares:</strong> Personas físicas o morales que auxilien en la gestión técnica bajo estricta confidencialidad.</li>
-        <li><strong>Instituciones Financieras:</strong> Únicamente para la ejecución de instrucciones de operación derivadas del contrato.</li>
-      </ul>
-
-      <h3>Derechos ARCO</h3>
-      <p>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al uso de sus datos personales. Para ejercerlos, envíe su solicitud a <strong>atclientes@armexcapital.com</strong> indicando su nombre, documentos que acrediten identidad y descripción clara de los datos. El Responsable responderá en un plazo máximo de <strong>20 días hábiles</strong>.</p>
-
-      <h3>Conservación y Seguridad (NOM-151)</h3>
-      <p>El Responsable mantendrá estrictas medidas de seguridad administrativas, técnicas y físicas. La conservación de mensajes de datos y contratos electrónicos cumplirá los requisitos de la NOM-151-SCFI-2016, garantizando que la información no sea alterada y permanezca disponible para consulta.</p>
-
-      <h3>Modificaciones</h3>
-      <p>El presente aviso puede sufrir modificaciones derivadas de nuevos requerimientos legales o de las necesidades del servicio. El Responsable se compromete a mantenerlo informado a través de esta página web oficial.</p>
-    </div>
-  </div>
 
   <script>
+    const _supabase = supabase.createClient(
+      'https://api.armex.website',
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc3ODc5MTUwMCwiZXhwIjo0OTM0NDY1MTAwLCJyb2xlIjoiYW5vbiJ9.dtLo8ORbaOLn6EjgGuyZKvcccX2i1bREfbuR_eRVENE'
+    );
+
+    function slotTo24h(slot) {
+      const [time, period] = slot.split(' ');
+      let [h, m] = time.split(':').map(Number);
+      if (period === 'p.m.' && h !== 12) h += 12;
+      if (period === 'a.m.' && h === 12) h = 0;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`;
+    }
+
+    function h24ToSlot(timeStr) {
+      const [h, m] = timeStr.split(':').map(Number);
+      const period = h < 12 ? 'a.m.' : 'p.m.';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      return `${String(h12).padStart(2,'0')}:${String(m).padStart(2,'0')} ${period}`;
+    }
+
     function toggleValue(el) {
       const isOpen = el.classList.contains('open');
       document.querySelectorAll('.value-item.open').forEach(i => i.classList.remove('open'));
       if (!isOpen) el.classList.add('open');
-    }
-
-    function openPrivacy(e) {
-      e.preventDefault();
-      document.getElementById('privacy-modal').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePrivacy() {
-      document.getElementById('privacy-modal').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closePrivacyOutside(e) {
-      if (e.target === document.getElementById('privacy-modal')) closePrivacy();
     }
 
     function openBiometricos(e) {
@@ -706,12 +680,7 @@
     let _slotsConfig = null;
     async function getSlotsConfig() {
       if (_slotsConfig) return _slotsConfig;
-      try {
-        const r = await fetch('/api/slots-config');
-        _slotsConfig = await r.json();
-      } catch {
-        _slotsConfig = { weekday: [10,11,12,13,14,15,16], saturday: [10,11,12,13,14,15] };
-      }
+      _slotsConfig = { weekday: [9,10,11,12,13,14,15,16,17], saturday: [9,10,11,12,13,14] };
       return _slotsConfig;
     }
 
@@ -776,17 +745,31 @@
 
       let ocupados = [];
       try {
-        const res = await fetch(`/api/slots-ocupados?fecha=${fechaISO}`);
-        const data = await res.json();
-        ocupados = data.ocupados || [];
+        const { data } = await _supabase
+          .from('citas')
+          .select('hora_cita')
+          .eq('fecha_cita', fechaISO)
+          .not('estatus', 'eq', 'cancelada');
+        ocupados = (data || []).map(r => h24ToSlot(r.hora_cita));
       } catch (_) {}
+
+      const isToday = date.toDateString() === new Date().toDateString();
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
       slotsDiv.innerHTML = '';
       slots.forEach(t => {
         const b = document.createElement('button');
         b.textContent = t;
         b.classList.add('slot-btn');
-        if (ocupados.includes(t)) {
+
+        let slotExpirado = false;
+        if (isToday) {
+          const [slotH, slotM] = slotTo24h(t).split(':').map(Number);
+          slotExpirado = (slotH * 60 + slotM) <= currentMinutes;
+        }
+
+        if (ocupados.includes(t) || slotExpirado) {
           b.disabled = true;
           b.classList.add('slot-ocupado');
           b.title = 'Horario no disponible';
@@ -809,8 +792,22 @@
 
     async function submitCita(e) {
       e.preventDefault();
-      const nombre = document.getElementById('cita-nombre').value.trim();
-      const tel    = document.getElementById('cita-tel').value.trim();
+      const nombre   = document.getElementById('cita-nombre').value.trim();
+      const tel      = document.getElementById('cita-tel').value.trim();
+      const email    = document.getElementById('cita-email').value.trim();
+      const servicio = document.getElementById('cita-servicio').value;
+
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+      if (!emailValido) {
+        alert('Por favor ingresa un correo electrónico válido (ejemplo: nombre@gmail.com)');
+        return;
+      }
+
+      const telefonoValido = /^[\d\s\-\+\(\)]{10,15}$/.test(tel);
+      if (!telefonoValido) {
+        alert('Por favor ingresa un número de teléfono válido (mínimo 10 dígitos)');
+        return;
+      }
 
       const yyyy = selectedDate.getFullYear();
       const mm   = String(selectedDate.getMonth() + 1).padStart(2, '0');
@@ -823,25 +820,21 @@
       submitBtn.disabled = true;
 
       try {
-        const res = await fetch('/api/reservar-cita', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, telefono: tel, fecha: fechaISO, hora: selectedTime, fechaLabel }),
-        });
+        const { error } = await _supabase.from('citas').insert([{
+          nombre,
+          telefono: tel,
+          email,
+          fecha_cita: fechaISO,
+          hora_cita: slotTo24h(selectedTime),
+          modalidad: 'presencial',
+          servicio_interes: servicio || null,
+          estatus: 'pendiente',
+        }]);
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          alert(data.error || 'Error al agendar la cita. Intenta de nuevo.');
-          submitBtn.textContent = 'Confirmar cita';
+        if (error) {
+          alert('Error al agendar la cita. Intenta de nuevo.');
+          submitBtn.textContent = 'Confirmar cita por WhatsApp';
           submitBtn.disabled = false;
-          if (res.status === 409) {
-            document.querySelectorAll('.slot-btn').forEach(b => {
-              if (b.textContent === selectedTime) b.classList.add('slot-ocupado');
-            });
-            selectedTime = null;
-            document.getElementById('cita-form').style.display = 'none';
-          }
           return;
         }
 
@@ -850,7 +843,7 @@
         document.getElementById('cita-confirm').style.display = 'flex';
       } catch (err) {
         alert('Error de conexión. Intenta de nuevo.');
-        submitBtn.textContent = 'Confirmar cita';
+        submitBtn.textContent = 'Confirmar cita por WhatsApp';
         submitBtn.disabled = false;
       }
     }
