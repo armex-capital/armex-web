@@ -13,13 +13,15 @@
   <!-- NAV -->
   <nav>
     <div class="nav-container">
-      <div class="logo"><img src="armex-logo.png" alt="Armex Capital" style="height:60px;display:block;"></div>
+      <a href="#" class="logo">
+        <img src="armex-logo.png" alt="Armex Capital" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+        <span class="logo-text-fallback" style="display:none;">ARMEX <span>Capital</span></span>
+      </a>
       <ul class="nav-links">
         <li><a href="#nosotros">Sobre Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#mvv">Misión & Valores</a></li>
-        <li><a href="#contacto">Contacto</a></li>
         <li><a href="#citas">Agendar Cita</a></li>
+        <li><a href="/verificar">Verificar Contrato</a></li>
       </ul>
     </div>
   </nav>
@@ -832,7 +834,9 @@
         }]);
 
         if (error) {
-          alert('Error al agendar la cita. Intenta de nuevo.');
+          console.error('Error al agendar cita:', error);
+          const msg = error.message || error.details || 'Error desconocido';
+          alert('Error al agendar la cita: ' + msg + '\n\nIntenta de nuevo en unos momentos.');
           submitBtn.textContent = 'Confirmar cita por WhatsApp';
           submitBtn.disabled = false;
           return;
@@ -842,7 +846,8 @@
         document.getElementById('slots-wrapper').style.display = 'none';
         document.getElementById('cita-confirm').style.display = 'flex';
       } catch (err) {
-        alert('Error de conexión. Intenta de nuevo.');
+        console.error('Error de conexión:', err);
+        alert('Error de conexión: ' + (err?.message || 'Verifica tu conexión a internet.') + '\n\nIntenta de nuevo.');
         submitBtn.textContent = 'Confirmar cita por WhatsApp';
         submitBtn.disabled = false;
       }
