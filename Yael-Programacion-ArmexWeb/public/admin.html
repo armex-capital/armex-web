@@ -4,341 +4,334 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Armex Capital</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #f4f5fb;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 32px rgba(15,11,119,0.10);
-      width: 100%;
-      max-width: 640px;
-      overflow: hidden;
-    }
-    .card-header {
-      background: #0f0b77;
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .card-header h1 {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    .card-header p {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.72rem;
-      margin-top: 2px;
-    }
-    .card-body { padding: 2rem; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Montserrat',sans-serif;background:#f0f2f8;color:#1a1a2e;min-height:100vh;}
 
-    /* LOGIN */
-    #login-view label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.5rem;
-    }
-    #login-view input {
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 0.75rem 1rem;
-      font-family: inherit;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color .2s;
-    }
-    #login-view input:focus { border-color: #0f0b77; }
-    #login-error {
-      color: #c0392b;
-      font-size: 0.78rem;
-      margin-top: 0.5rem;
-      min-height: 1.2em;
-    }
-    .btn-primary {
-      margin-top: 1.25rem;
-      width: 100%;
-      background: #0f0b77;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 0.85rem;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .btn-primary:hover { background: #1c178a; }
-    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+    /* HEADER */
+    .admin-header{background:#0f0b77;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(15,11,119,0.3);}
+    .admin-logo{font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:2px;}
+    .admin-subtitle{font-size:0.72rem;color:rgba(255,255,255,0.6);margin-top:2px;}
+    .admin-clock{font-size:0.78rem;color:rgba(255,255,255,0.7);font-weight:600;text-align:right;}
+
+    /* MAIN */
+    .admin-main{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+    @media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+    .stat-card{background:#fff;border-radius:10px;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-top:3px solid #0f0b77;}
+    .stat-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#8B949E;margin-bottom:0.4rem;}
+    .stat-value{font-size:1.8rem;font-weight:800;color:#0f0b77;line-height:1;}
+    .stat-card.green{border-top-color:#27ae60;}.stat-card.green .stat-value{color:#27ae60;}
+    .stat-card.orange{border-top-color:#f39c12;}.stat-card.orange .stat-value{color:#f39c12;}
+    .stat-card.red{border-top-color:#e74c3c;}.stat-card.red .stat-value{color:#e74c3c;}
+
+    /* TABS */
+    .tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
+    .tab-btn{padding:0.65rem 1.5rem;border:none;border-radius:6px;font-family:inherit;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all .2s;background:#fff;color:#8B949E;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+    .tab-btn.active{background:#0f0b77;color:#fff;}
+    .tab-btn:hover:not(.active){background:#e8e8f5;color:#0f0b77;}
 
     /* PANEL */
-    #panel-view { display: none; }
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #0f0b77;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #eee;
-    }
-    .slots-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.75rem;
-    }
-    .slot-toggle {
-      position: relative;
-    }
-    .slot-toggle input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slot-toggle label {
-      display: inline-block;
-      padding: 0.45rem 1rem;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #aaa;
-      cursor: pointer;
-      transition: all .15s;
-      user-select: none;
-    }
-    .slot-toggle input:checked + label {
-      border-color: #0f0b77;
-      background: #0f0b77;
-      color: #fff;
-    }
-    .save-bar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid #eee;
-    }
-    .save-bar button {
-      background: #0f0b77;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 0.75rem 2rem;
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .save-bar button:hover { background: #1c178a; }
-    .save-bar button:disabled { background: #aaa; cursor: not-allowed; }
-    #save-msg {
-      font-size: 0.8rem;
-      font-weight: 600;
-      min-height: 1.2em;
-    }
-    .success { color: #27ae60; }
-    .error-msg { color: #c0392b; }
-    .logout-btn {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.75rem;
-      cursor: pointer;
-      font-family: inherit;
-      margin-left: auto;
-      text-decoration: underline;
-    }
-    .logout-btn:hover { color: #fff; }
+    .panel{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+
+    /* FILTER PILLS */
+    .filter-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+    .filter-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8B949E;margin-right:0.5rem;}
+    .filter-pill{padding:0.4rem 1rem;border:1.5px solid #ddd;border-radius:20px;font-family:inherit;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all .15s;background:none;color:#888;}
+    .filter-pill.active{border-color:#0f0b77;background:#0f0b77;color:#fff;}
+    .filter-pill:hover:not(.active){border-color:#0f0b77;color:#0f0b77;}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+    thead th{padding:0.6rem 1rem;text-align:left;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8B949E;border-bottom:2px solid #eee;white-space:nowrap;}
+    tbody tr{border-bottom:1px solid #f0f0f0;transition:background .15s;}
+    tbody tr:hover{background:#f8f8ff;}
+    tbody td{padding:0.85rem 1rem;vertical-align:middle;}
+    .td-name{font-weight:700;color:#1a1a2e;}
+    .td-muted{color:#8B949E;font-size:0.78rem;}
+    .td-date{font-weight:600;color:#0f0b77;white-space:nowrap;}
+
+    /* BADGE */
+    .badge{display:inline-block;padding:0.3rem 0.75rem;border-radius:20px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;}
+    .badge-pendiente{background:#fff3cd;color:#856404;}
+    .badge-confirmada{background:#d4edda;color:#155724;}
+    .badge-cancelada{background:#f8d7da;color:#721c24;}
+
+    /* ACTION BUTTONS */
+    .actions{display:flex;gap:0.4rem;}
+    .btn-sm{padding:0.35rem 0.75rem;border:none;border-radius:4px;font-family:inherit;font-size:0.72rem;font-weight:700;cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+    .btn-sm:hover{opacity:0.82;}
+    .btn-confirm{background:#27ae60;color:#fff;}
+    .btn-cancel{background:#e74c3c;color:#fff;}
+    .btn-restore{background:#f39c12;color:#fff;}
+
+    /* EMPTY / LOADING */
+    .empty-state{text-align:center;padding:3rem;color:#8B949E;font-size:0.85rem;}
+    .empty-icon{font-size:2.5rem;margin-bottom:0.75rem;}
+    .loading{text-align:center;padding:2rem;color:#8B949E;font-size:0.85rem;}
+
+    /* HORARIOS */
+    .horarios-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0f0b77;margin-bottom:0.75rem;padding-bottom:0.5rem;border-bottom:2px solid #eee;}
+    .slots-grid{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem;}
+    .slot-toggle{position:relative;}
+    .slot-toggle input{position:absolute;opacity:0;width:0;height:0;}
+    .slot-toggle label{display:inline-block;padding:0.45rem 1rem;border:2px solid #ddd;border-radius:6px;font-size:0.8rem;font-weight:600;color:#aaa;cursor:pointer;transition:all .15s;user-select:none;}
+    .slot-toggle input:checked+label{border-color:#0f0b77;background:#0f0b77;color:#fff;}
+    .save-bar{display:flex;align-items:center;gap:1rem;padding-top:1rem;border-top:1px solid #eee;}
+    .btn-save{background:#0f0b77;color:#fff;border:none;border-radius:6px;padding:0.75rem 2rem;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:background .2s;}
+    .btn-save:hover{background:#1c178a;}
+    .btn-save:disabled{background:#aaa;cursor:not-allowed;}
+    #save-msg{font-size:0.8rem;font-weight:600;}
+    .msg-ok{color:#27ae60;}.msg-err{color:#e74c3c;}
   </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="card-header">
-    <div>
-      <h1>Panel de Administración</h1>
-      <p>Armex Capital — Gestión de horarios</p>
-    </div>
-    <button class="logout-btn" id="logout-btn" style="display:none;" onclick="logout()">Cerrar sesión</button>
+<header class="admin-header">
+  <div>
+    <div class="admin-logo">Armex Capital</div>
+    <div class="admin-subtitle">Panel Administrativo</div>
+  </div>
+  <div class="admin-clock" id="admin-clock"></div>
+</header>
+
+<main class="admin-main">
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total citas</div><div class="stat-value" id="stat-total">—</div></div>
+    <div class="stat-card orange"><div class="stat-label">Pendientes</div><div class="stat-value" id="stat-pendientes">—</div></div>
+    <div class="stat-card green"><div class="stat-label">Confirmadas</div><div class="stat-value" id="stat-confirmadas">—</div></div>
+    <div class="stat-card red"><div class="stat-label">Canceladas</div><div class="stat-value" id="stat-canceladas">—</div></div>
   </div>
 
-  <div class="card-body">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('citas',this)">📅 Citas</button>
+    <button class="tab-btn" onclick="switchTab('horarios',this)">🕐 Horarios</button>
+  </div>
 
-    <!-- LOGIN -->
-    <div id="login-view">
-      <label for="pwd-input">Contraseña</label>
-      <input type="password" id="pwd-input" placeholder="••••••••••" autocomplete="current-password" />
-      <div id="login-error"></div>
-      <button class="btn-primary" id="login-btn" onclick="doLogin()">Ingresar</button>
+  <div id="tab-citas">
+    <div class="panel">
+      <div class="filter-row">
+        <span class="filter-label">Filtrar:</span>
+        <button class="filter-pill active" onclick="filterCitas('todas',this)">Todas</button>
+        <button class="filter-pill" onclick="filterCitas('pendiente',this)">Pendientes</button>
+        <button class="filter-pill" onclick="filterCitas('confirmada',this)">Confirmadas</button>
+        <button class="filter-pill" onclick="filterCitas('cancelada',this)">Canceladas</button>
+      </div>
+      <div class="table-wrap">
+        <div id="citas-loading" class="loading">Cargando citas...</div>
+        <table id="citas-table" style="display:none;">
+          <thead>
+            <tr>
+              <th>Fecha</th><th>Hora</th><th>Nombre</th><th>Teléfono</th><th>Correo</th><th>Servicio</th><th>Estatus</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="citas-tbody"></tbody>
+        </table>
+        <div id="citas-empty" class="empty-state" style="display:none;">
+          <div class="empty-icon">📭</div>
+          <div>No hay citas con este filtro.</div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- PANEL -->
-    <div id="panel-view">
-      <p class="section-label">Horarios entre semana (Lun – Vie)</p>
+  <div id="tab-horarios" style="display:none;">
+    <div class="panel">
+      <p class="horarios-label">Horarios entre semana (Lun – Vie)</p>
       <div class="slots-grid" id="weekday-slots"></div>
-
-      <p class="section-label">Horarios sábado</p>
+      <p class="horarios-label">Horarios sábado</p>
       <div class="slots-grid" id="saturday-slots"></div>
-
       <div class="save-bar">
-        <button id="save-btn" onclick="saveConfig()">Guardar cambios</button>
+        <button class="btn-save" id="save-btn" onclick="saveConfig()">Guardar cambios</button>
         <span id="save-msg"></span>
       </div>
     </div>
-
   </div>
-</div>
 
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+  const _sb = supabase.createClient(
+    'https://api.armex.website',
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc3ODc5MTUwMCwiZXhwIjo0OTM0NDY1MTAwLCJyb2xlIjoiYW5vbiJ9.dtLo8ORbaOLn6EjgGuyZKvcccX2i1bREfbuR_eRVENE'
+  );
+
+  let allCitas = [];
+  let currentFilter = 'todas';
+  const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   const ALL_HOURS = [8,9,10,11,12,13,14,15,16,17,18];
-  let token = sessionStorage.getItem('admin_token') || null;
 
   function formatHour(h) {
-    const period = h < 12 ? 'a.m.' : 'p.m.';
+    const p = h < 12 ? 'a.m.' : 'p.m.';
     const h12 = h % 12 === 0 ? 12 : h % 12;
-    return `${String(h12).padStart(2,'0')}:00 ${period}`;
+    return `${String(h12).padStart(2,'0')}:00 ${p}`;
+  }
+  function formatFecha(s) {
+    const [y,m,d] = s.split('-').map(Number);
+    return `${d} ${MESES[m-1]} ${y}`;
+  }
+  function formatHora(s) {
+    const [h,mi] = s.split(':').map(Number);
+    const p = h < 12 ? 'a.m.' : 'p.m.';
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    return `${String(h12).padStart(2,'0')}:${String(mi).padStart(2,'0')} ${p}`;
   }
 
-  function buildSlotToggles(containerId, activeHours) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = '';
-    ALL_HOURS.forEach(h => {
-      const wrap = document.createElement('div');
-      wrap.className = 'slot-toggle';
-      const id = `${containerId}-${h}`;
-      const checked = activeHours.includes(h) ? 'checked' : '';
-      wrap.innerHTML = `
-        <input type="checkbox" id="${id}" value="${h}" ${checked} />
-        <label for="${id}">${formatHour(h)}</label>
-      `;
-      container.appendChild(wrap);
-    });
+  function updateClock() {
+    document.getElementById('admin-clock').textContent =
+      new Date().toLocaleDateString('es-MX', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  }
+  updateClock();
+  setInterval(updateClock, 60000);
+
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-citas').style.display   = tab === 'citas'    ? 'block' : 'none';
+    document.getElementById('tab-horarios').style.display = tab === 'horarios' ? 'block' : 'none';
+    if (tab === 'horarios') loadHorarios();
   }
 
-  function getChecked(containerId) {
-    return [...document.querySelectorAll(`#${containerId} input:checked`)]
-      .map(i => Number(i.value));
-  }
-
-  async function doLogin() {
-    const pwd = document.getElementById('pwd-input').value;
-    const btn = document.getElementById('login-btn');
-    const errEl = document.getElementById('login-error');
-    btn.disabled = true;
-    btn.textContent = 'Verificando...';
-    errEl.textContent = '';
-
+  async function loadCitas() {
     try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pwd }),
-      });
-      if (res.ok) {
-        token = pwd;
-        sessionStorage.setItem('admin_token', token);
-        showPanel();
-      } else {
-        errEl.textContent = 'Contraseña incorrecta. Intenta de nuevo.';
-        btn.disabled = false;
-        btn.textContent = 'Ingresar';
-      }
+      const { data, error } = await _sb
+        .from('citas').select('*')
+        .order('fecha_cita', { ascending: true })
+        .order('hora_cita',  { ascending: true });
+      if (error) throw error;
+      allCitas = data || [];
+      updateStats();
+      renderCitas();
+      document.getElementById('citas-loading').style.display = 'none';
     } catch {
-      errEl.textContent = 'Error de conexión.';
-      btn.disabled = false;
-      btn.textContent = 'Ingresar';
+      document.getElementById('citas-loading').textContent = 'Error al cargar citas.';
     }
   }
 
-  async function showPanel() {
-    document.getElementById('login-view').style.display = 'none';
-    document.getElementById('panel-view').style.display = 'block';
-    document.getElementById('logout-btn').style.display = 'inline';
+  function updateStats() {
+    document.getElementById('stat-total').textContent       = allCitas.length;
+    document.getElementById('stat-pendientes').textContent  = allCitas.filter(c => c.estatus === 'pendiente').length;
+    document.getElementById('stat-confirmadas').textContent = allCitas.filter(c => c.estatus === 'confirmada').length;
+    document.getElementById('stat-canceladas').textContent  = allCitas.filter(c => c.estatus === 'cancelada').length;
+  }
 
-    const res = await fetch('/api/admin/config', {
-      headers: { Authorization: `Bearer ${token}` },
+  function filterCitas(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    renderCitas();
+  }
+
+  function renderCitas() {
+    const list = currentFilter === 'todas' ? allCitas : allCitas.filter(c => c.estatus === currentFilter);
+    const tbody = document.getElementById('citas-tbody');
+    const table = document.getElementById('citas-table');
+    const empty = document.getElementById('citas-empty');
+    if (!list.length) { table.style.display='none'; empty.style.display='block'; return; }
+    table.style.display = 'table'; empty.style.display = 'none';
+    tbody.innerHTML = list.map(c => {
+      const label = c.estatus.charAt(0).toUpperCase() + c.estatus.slice(1);
+      let btns = '';
+      if (c.estatus !== 'confirmada') {
+        if (c.modalidad === 'En línea') {
+          btns += `<button class="btn-sm btn-confirm" onclick="confirmarEnLinea(${c.id})">✓ Confirmar</button>`;
+        } else {
+          btns += `<button class="btn-sm btn-confirm" onclick="updateEstatus(${c.id},'confirmada')">✓ Confirmar</button>`;
+        }
+      }
+      if (c.estatus !== 'cancelada')  btns += `<button class="btn-sm btn-cancel"  onclick="updateEstatus(${c.id},'cancelada')">✕ Cancelar</button>`;
+      if (c.estatus !== 'pendiente')  btns += `<button class="btn-sm btn-restore" onclick="updateEstatus(${c.id},'pendiente')">↩ Pendiente</button>`;
+      const enlaceCell = c.modalidad === 'En línea'
+        ? (c.enlace_reunion ? `<a href="${c.enlace_reunion}" target="_blank" style="color:#0f0b77;font-size:12px;">Ver enlace</a>` : '<span style="color:#aaa;font-size:12px;">Sin enlace</span>')
+        : '—';
+      return `<tr id="row-${c.id}">
+        <td class="td-date">${formatFecha(c.fecha_cita)}</td>
+        <td class="td-date">${formatHora(c.hora_cita)}</td>
+        <td class="td-name">${c.nombre}</td>
+        <td class="td-muted">${c.telefono}</td>
+        <td class="td-muted">${c.email || '—'}</td>
+        <td class="td-muted">${c.servicio_interes || '—'}</td>
+        <td class="td-muted">${c.modalidad || 'Presencial'}</td>
+        <td class="td-muted">${enlaceCell}</td>
+        <td><span class="badge badge-${c.estatus}">${label}</span></td>
+        <td><div class="actions">${btns}</div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function updateEstatus(id, nuevoEstatus) {
+    const { error } = await _sb.from('citas').update({ estatus: nuevoEstatus }).eq('id', id);
+    if (!error) {
+      const c = allCitas.find(c => c.id === id);
+      if (c) c.estatus = nuevoEstatus;
+      updateStats();
+      renderCitas();
+    } else {
+      alert('Error al actualizar. Verifica los permisos en Supabase (ver SQL de configuración).');
+    }
+  }
+
+  async function confirmarEnLinea(id) {
+    const enlace = prompt('Pega el enlace de Google Meet para esta cita:');
+    if (!enlace) return;
+    const { error } = await _sb.from('citas').update({ estatus: 'confirmada', enlace_reunion: enlace }).eq('id', id);
+    if (!error) {
+      const c = allCitas.find(c => c.id === id);
+      if (c) { c.estatus = 'confirmada'; c.enlace_reunion = enlace; }
+      updateStats();
+      renderCitas();
+    } else {
+      alert('Error al confirmar. Verifica los permisos en Supabase.');
+    }
+  }
+
+  async function loadHorarios() {
+    const { data } = await _sb.from('config_slots').select('*');
+    const weekday  = data?.find(r => r.tipo === 'weekday')?.horas  || [9,10,11,12,13,14,15,16,17];
+    const saturday = data?.find(r => r.tipo === 'saturday')?.horas || [9,10,11,12,13,14];
+    buildToggles('weekday-slots',  weekday);
+    buildToggles('saturday-slots', saturday);
+  }
+
+  function buildToggles(containerId, activeHours) {
+    const c = document.getElementById(containerId);
+    c.innerHTML = '';
+    ALL_HOURS.forEach(h => {
+      const id = `${containerId}-${h}`;
+      const wrap = document.createElement('div');
+      wrap.className = 'slot-toggle';
+      wrap.innerHTML = `<input type="checkbox" id="${id}" value="${h}" ${activeHours.includes(h)?'checked':''}/>
+        <label for="${id}">${formatHour(h)}</label>`;
+      c.appendChild(wrap);
     });
-    if (res.status === 401) { logout(); return; }
-    const config = await res.json();
-    buildSlotToggles('weekday-slots', config.weekday || []);
-    buildSlotToggles('saturday-slots', config.saturday || []);
+  }
+
+  function getChecked(id) {
+    return [...document.querySelectorAll(`#${id} input:checked`)].map(i => Number(i.value));
   }
 
   async function saveConfig() {
     const btn = document.getElementById('save-btn');
     const msg = document.getElementById('save-msg');
-    btn.disabled = true;
-    msg.textContent = 'Guardando...';
-    msg.className = '';
-
-    const weekday = getChecked('weekday-slots').sort((a,b) => a-b);
-    const saturday = getChecked('saturday-slots').sort((a,b) => a-b);
-
-    try {
-      const res = await fetch('/api/admin/config', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ weekday, saturday }),
-      });
-      if (res.ok) {
-        msg.textContent = 'Cambios guardados correctamente.';
-        msg.className = 'success';
-      } else if (res.status === 401) {
-        logout();
-      } else {
-        msg.textContent = 'Error al guardar.';
-        msg.className = 'error-msg';
-      }
-    } catch {
-      msg.textContent = 'Error de conexión.';
-      msg.className = 'error-msg';
-    }
-
+    btn.disabled = true; msg.textContent = 'Guardando...'; msg.className = '';
+    const weekday  = getChecked('weekday-slots').sort((a,b)=>a-b);
+    const saturday = getChecked('saturday-slots').sort((a,b)=>a-b);
+    const now = new Date().toISOString();
+    const r1 = await _sb.from('config_slots').update({ horas: weekday,  actualizado_en: now }).eq('tipo','weekday');
+    const r2 = await _sb.from('config_slots').update({ horas: saturday, actualizado_en: now }).eq('tipo','saturday');
+    if (!r1.error && !r2.error) { msg.textContent = '✓ Guardado'; msg.className = 'msg-ok'; }
+    else { msg.textContent = '✕ Error al guardar'; msg.className = 'msg-err'; }
     btn.disabled = false;
     setTimeout(() => { msg.textContent = ''; }, 3000);
   }
 
-  function logout() {
-    sessionStorage.removeItem('admin_token');
-    token = null;
-    document.getElementById('login-view').style.display = 'block';
-    document.getElementById('panel-view').style.display = 'none';
-    document.getElementById('logout-btn').style.display = 'none';
-    document.getElementById('pwd-input').value = '';
-  }
-
-  document.getElementById('pwd-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-
-  if (token) showPanel();
+  loadCitas();
 </script>
 </body>
 </html>

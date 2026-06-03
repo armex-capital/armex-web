@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marisol Salas Arce — Armex Capital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #0f0b77;
+      --primary-light: #3d39c4;
+      --bg: #EEF0F8;
+      --card-bg: #FFFFFF;
+      --text-main: #1A1A2E;
+      --text-muted: #6B7280;
+      --white: #FFFFFF;
+      --border: #E2E4EF;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      background: linear-gradient(160deg, #0f0b77 0%, #06041f 60%, #000000 100%);
+      padding: 2.5rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+.card-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.5px;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .card-company {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.2rem;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      background: var(--card-bg);
+      flex: 1;
+      padding: 1.5rem 1.5rem 6rem;
+      border-radius: 24px 24px 0 0;
+      margin-top: -20px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 -4px 20px rgba(15,11,119,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-label,
+    .contact-item {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .section-label:first-child { margin-top: 0; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      background: #F7F8FC;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .contact-item:hover, .contact-item:active {
+      background: #EBEDFa;
+      border-color: var(--primary-light);
+    }
+
+    .contact-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-blue   { background: rgba(15,11,119,0.10); }
+    .icon-green  { background: rgba(37,211,102,0.12); }
+    .icon-orange { background: rgba(255,165,0,0.12); }
+    .icon-gray   { background: rgba(107,114,128,0.10); }
+
+    .contact-info { flex: 1; min-width: 0; text-align: center; }
+
+    .contact-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .contact-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 0.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-chevron {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .save-btn-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 2rem 1.5rem;
+      background: linear-gradient(to top, var(--card-bg) 70%, transparent);
+      z-index: 10;
+    }
+
+    .save-btn {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .save-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(15,11,119,0.4);
+      transition: opacity 0.2s;
+    }
+
+    .save-btn:hover { opacity: 0.9; }
+
+    .bg-logo {
+      position: absolute;
+      width: 60%;
+      max-width: 380px;
+      opacity: 0.25;
+      filter: brightness(100) saturate(0);
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="card-header">
+    <img src="logo-nav-transparent.png" class="bg-logo" alt="" aria-hidden="true" />
+    <div class="header-content">
+<div class="card-name">Marisol Salas Arce</div>
+      <div class="card-title">Asistente Directivo</div>
+      <div class="card-company">Armex Capital, S.A.P.I. de C.V.</div>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <div class="section-label">Contacto directo</div>
+
+    <a class="contact-item" href="tel:+527772752936">
+      <div class="contact-icon icon-blue">📞</div>
+      <div class="contact-info">
+        <div class="contact-label">Celular</div>
+        <div class="contact-value">777 275 2936</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+    <a class="contact-item" href="https://wa.me/527772752936" target="_blank" rel="noopener">
+      <div class="contact-icon icon-green">💬</div>
+      <div class="contact-info">
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-value">777 275 2936</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+    <a class="contact-item" href="mailto:atclientes@armexcapital.com">
+      <div class="contact-icon icon-blue">✉️</div>
+      <div class="contact-info">
+        <div class="contact-label">Correo</div>
+        <div class="contact-value">atclientes@armexcapital.com</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+    <div class="section-label">Oficina</div>
+
+    <a class="contact-item" href="tel:+527779991166">
+      <div class="contact-icon icon-gray">☎️</div>
+      <div class="contact-info">
+        <div class="contact-label">Teléfono fijo</div>
+        <div class="contact-value">777 999 1166 &nbsp;|&nbsp; 777 999 1165</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+    <a class="contact-item" href="https://maps.google.com/?q=Av.+de+los+50m+No.+100,+Villas+del+Lago,+Cuernavaca,+Morelos" target="_blank" rel="noopener">
+      <div class="contact-icon icon-orange">📍</div>
+      <div class="contact-info">
+        <div class="contact-label">Dirección</div>
+        <div class="contact-value">Av. de los 50m No. 100, Villas del Lago</div>
+        <div class="contact-label" style="margin-top:2px;">Cuernavaca, Morelos</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+    <a class="contact-item" href="https://armexcapital.com" target="_blank" rel="noopener">
+      <div class="contact-icon icon-blue">🌐</div>
+      <div class="contact-info">
+        <div class="contact-label">Sitio web</div>
+        <div class="contact-value">armexcapital.com</div>
+      </div>
+      <div class="contact-chevron">›</div>
+    </a>
+
+  </div>
+
+  <div class="save-btn-wrap">
+    <button class="save-btn" onclick="downloadVCard()">⬇ Guardar en contactos</button>
+  </div>
+
+</div>
+
+<script>
+function downloadVCard() {
+  const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Marisol Salas Arce
+N:Salas Arce;Marisol;;;
+ORG:Armex Capital\, S.A.P.I. de C.V.
+TITLE:Asistente Directivo
+TEL;TYPE=CELL,VOICE:+527772752936
+TEL;TYPE=WORK,VOICE:+527779991166
+TEL;TYPE=WORK,VOICE:+527779991165
+EMAIL;TYPE=WORK:atclientes@armexcapital.com
+ADR;TYPE=WORK:;;Av. de los 50m No. 100;Cuernavaca;Morelos;;México
+URL:https://armexcapital.com
+X-SOCIALPROFILE;type=whatsapp:+527772752936
+END:VCARD`;
+
+  const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Marisol_Salas_Armex.vcf';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>

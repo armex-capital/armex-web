@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verificar Contrato — Armex Capital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f4f6fb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .logo { text-align: center; margin-bottom: 2rem; }
+    .logo img { height: 48px; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(15,11,119,0.10);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(160deg, #0f0b77 0%, #06041f 100%);
+      padding: 2rem;
+      text-align: center;
+    }
+    .card-header .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .card-header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .card-body { padding: 1.75rem; }
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .status-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .status-icon.ok  { background: rgba(42,157,92,0.12); border: 1.5px solid rgba(42,157,92,0.35); }
+    .status-icon.err { background: rgba(220,38,38,0.10); border: 1.5px solid rgba(220,38,38,0.30); }
+    .status-icon svg { width: 20px; height: 20px; }
+    .status-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.15rem; }
+    .status-label.ok  { color: #2A9D5C; }
+    .status-label.err { color: #ef4444; }
+    .status-title { font-size: 1.05rem; font-weight: 700; color: #0f0b77; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table tr { border-bottom: 1px solid #eef2fa; }
+    .data-table tr:last-child { border-bottom: none; }
+    .data-table td { padding: 0.65rem 0; font-size: 0.8rem; }
+    .data-table td:first-child { color: #888; width: 40%; }
+    .data-table td:last-child { color: #0f0b77; font-weight: 600; text-align: right; }
+    .data-table td.vigente  { color: #2A9D5C; }
+    .data-table td.vencido  { color: #aaa; }
+    .data-table td.pendiente { color: #b4913c; }
+    .note { font-size: 0.72rem; color: #aaa; margin-top: 1.25rem; }
+    .footer-text { margin-top: 1.5rem; text-align: center; font-size: 0.72rem; color: #aaa; }
+    .footer-text a { color: #0f0b77; text-decoration: none; }
+
+    /* Scanner UI */
+    .scanner-wrap { text-align: center; }
+    .scanner-desc {
+      font-size: 0.82rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .btn-scan {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0f0b77;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.75rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-scan:hover { background: #1a15a0; }
+    .btn-scan svg { width: 18px; height: 18px; }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+      color: #ccc;
+      font-size: 0.72rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #eef2fa;
+    }
+    .input-token {
+      width: 100%;
+      border: 1.5px solid #dde3f0;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      color: #0f0b77;
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s;
+    }
+    .input-token:focus { border-color: #0f0b77; }
+    .input-token::placeholder { color: #bbb; text-transform: none; letter-spacing: normal; }
+    .btn-check {
+      margin-top: 0.75rem;
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid #0f0b77;
+      color: #0f0b77;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-check:hover { background: #0f0b77; color: #fff; }
+    #reader { margin-top: 1rem; border-radius: 10px; overflow: hidden; }
+    #reader * { border-radius: 10px; }
+    .btn-cancel {
+      margin-top: 0.75rem;
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid #dde3f0;
+      color: #888;
+      border-radius: 8px;
+      padding: 0.65rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="/armex-logo.png" alt="Armex Capital" onerror="this.style.display='none'" />
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <p class="label">Armex Capital S.A.P.I. de C.V.</p>
+      <h1>Verificación de Contrato</h1>
+    </div>
+    <div class="card-body" id="card-body">
+      <p id="loading">Cargando...</p>
+    </div>
+  </div>
+
+  <p class="footer-text">
+    ¿Dudas? <a href="mailto:atclientes@armexcapital.com">atclientes@armexcapital.com</a>
+  </p>
+
+  <script>
+    const SUPABASE_URL = 'https://api.armex.website'
+    const SUPABASE_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc3ODc5MTUwMCwiZXhwIjo0OTM0NDY1MTAwLCJyb2xlIjoiYW5vbiJ9.dtLo8ORbaOLn6EjgGuyZKvcccX2i1bREfbuR_eRVENE'
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+    function formatFecha(iso) {
+      if (!iso) return 'Por definir'
+      const d = new Date(iso + 'T12:00:00')
+      if (isNaN(d.getTime())) return 'Por definir'
+      return `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`
+    }
+
+    function calcularVencimiento(fechaInicio, plazoMeses) {
+      if (!fechaInicio || !plazoMeses) return null
+      const d = new Date(fechaInicio + 'T12:00:00')
+      d.setMonth(d.getMonth() + parseInt(plazoMeses))
+      return d.toISOString().split('T')[0]
+    }
+
+    function colorClass(estatus) {
+      const e = (estatus || '').toUpperCase()
+      if (e === 'VIGENTE' || e === 'ACTIVO') return 'vigente'
+      if (e === 'VENCIDO') return 'vencido'
+      if (e === 'PENDIENTE') return 'pendiente'
+      return ''
+    }
+
+    function mostrarEscaner() {
+      const body = document.getElementById('card-body')
+      body.innerHTML = `
+        <div class="scanner-wrap">
+          <p class="scanner-desc">Escanea el código QR de tu contrato con la cámara o ingresa el código manualmente.</p>
+          <button class="btn-scan" onclick="iniciarEscaner()">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9V5a2 2 0 012-2h4M3 15v4a2 2 0 002 2h4m10-16h-4a2 2 0 00-2 2v4m6 10h-4a2 2 0 01-2-2v-4"/></svg>
+            Escanear QR con cámara
+          </button>
+          <div id="reader"></div>
+        </div>
+      `
+    }
+
+    let scanner = null
+
+    function iniciarEscaner() {
+      if (scanner) return
+      scanner = new Html5Qrcode('reader')
+      scanner.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText) => {
+          scanner.stop().then(() => { scanner = null })
+          const match = decodedText.match(/[#/]([A-Za-z0-9]{8,})$/)
+          const token = match ? match[1] : decodedText.trim()
+          if (token) window.location.href = `/verificar/#${token.toUpperCase()}`
+        },
+        () => {}
+      ).catch(() => {
+        document.getElementById('reader').innerHTML = '<p style="color:#ef4444;font-size:0.78rem;text-align:center;margin-top:0.5rem;">No se pudo acceder a la cámara.</p>'
+        scanner = null
+      })
+
+      const readerEl = document.getElementById('reader')
+      readerEl.insertAdjacentHTML('afterend', '<button class="btn-cancel" onclick="cancelarEscaner()">Cancelar</button>')
+    }
+
+    function cancelarEscaner() {
+      if (scanner) scanner.stop().then(() => { scanner = null })
+      mostrarEscaner()
+    }
+
+    async function verificar() {
+      const token = (window.location.hash.replace('#', '') || '').toUpperCase()
+      const body = document.getElementById('card-body')
+
+      if (!token) {
+        mostrarEscaner()
+        return
+      }
+
+      // Ocultar el token de la URL inmediatamente
+      history.replaceState(null, '', '/verificar/')
+
+      body.innerHTML = '<p style="text-align:center;color:#888;font-size:0.85rem;padding:1rem 0;">Consultando contrato...</p>'
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/v_verificacion_contrato?token_verificacion=eq.${token}&select=*`,
+          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+        )
+        const data = await res.json()
+        const c = Array.isArray(data) ? data[0] : null
+
+        if (c) {
+          const ec = colorClass(c.estatus)
+          body.innerHTML = `
+            <div class="status-row">
+              <div class="status-icon ok">
+                <svg fill="none" viewBox="0 0 24 24" stroke="#2A9D5C"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <p class="status-label ok">Contrato auténtico</p>
+                <p class="status-title">Verificación exitosa</p>
+              </div>
+            </div>
+            <table class="data-table">
+              <tr><td>Folio</td><td>${c.numero_contrato}</td></tr>
+              <tr><td>Titular</td><td>${c.nombre_cliente}</td></tr>
+              <tr><td>Producto</td><td>${c.servicio}</td></tr>
+              <tr><td>Plazo</td><td>${c.plazo_meses} meses</td></tr>
+              <tr><td>Firma</td><td>${formatFecha(c.fecha_firma)}</td></tr>
+              <tr><td>Vencimiento</td><td>${formatFecha(c.fecha_vencimiento || calcularVencimiento(c.fecha_inicio, c.plazo_meses))}</td></tr>
+              <tr><td>Estado</td><td class="${ec}">${(c.estatus||'').toUpperCase()}</td></tr>
+            </table>
+            <p class="note">Registrado por Armex Capital S.A.P.I. de C.V.</p>
+          `
+        } else {
+          body.innerHTML = `
+            <div class="status-row">
+              <div class="status-icon err">
+                <svg fill="none" viewBox="0 0 24 24" stroke="#ef4444"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/></svg>
+              </div>
+              <div>
+                <p class="status-label err">No encontrado</p>
+                <p class="status-title">Contrato no verificado</p>
+              </div>
+            </div>
+            <p style="font-size:0.85rem;color:#555;margin-bottom:1rem;line-height:1.6;">El código no corresponde a ningún contrato registrado. Si crees que es un error, contáctanos.</p>
+            <button class="btn-check" onclick="mostrarEscaner()">Intentar de nuevo</button>
+          `
+        }
+      } catch {
+        body.innerHTML = `<p style="color:#ef4444;font-size:0.85rem;text-align:center;">Error de conexión. Intenta de nuevo.</p>`
+      }
+    }
+
+    verificar()
+  </script>
+</body>
+</html>

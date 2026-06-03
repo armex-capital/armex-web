@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Armex Capital — Crecimiento Patrimonial con Confianza</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -13,16 +15,33 @@
   <!-- NAV -->
   <nav>
     <div class="nav-container">
-      <div class="logo"><img src="armex-logo.png" alt="Armex Capital" style="height:60px;display:block;"></div>
+      <a href="#" class="logo">
+        <img src="armex-logo.png" alt="Armex Capital" class="logo-img" style="height:48px;width:auto;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+        <span class="logo-text-fallback" style="display:none;">ARMEX <span>Capital</span></span>
+      </a>
       <ul class="nav-links">
         <li><a href="#nosotros">Sobre Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#mvv">Misión & Valores</a></li>
-        <li><a href="#contacto">Contacto</a></li>
         <li><a href="#citas">Agendar Cita</a></li>
+        <li><a href="/verificar">Verificar Contrato</a></li>
       </ul>
+      <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
+    <ul>
+      <li><a href="#nosotros" onclick="toggleMenu()">Sobre Nosotros</a></li>
+      <li><a href="#servicios" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="#citas" onclick="toggleMenu()">Agendar Cita</a></li>
+      <li><a href="/verificar" onclick="toggleMenu()">Verificar Contrato</a></li>
+    </ul>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="hero-section">
@@ -145,8 +164,8 @@
           <div class="card-icon">🚀</div>
           <h3>Capital Impulso</h3>
           <p class="card-range">Desde $5,000 MXN</p>
-          <p class="card-detail">Plazo: 12 meses</p>
-          <p class="card-desc">Ideal para quienes inician su camino patrimonial. Contrato formal y condiciones claras desde el inicio.</p>
+          <p class="card-detail">Plazo: 12 meses · Pago mensual</p>
+          <p class="card-desc">El punto de entrada al ecosistema ARMEX. Contrato formal a 12 meses con seguimiento mensual, retribuciones periódicas y condiciones pactadas por escrito desde el primer día. Diseñado para quienes dan el primer paso hacia la gestión patrimonial privada con respaldo institucional.</p>
           <span class="card-more">Ver más →</span>
         </a>
 
@@ -155,8 +174,8 @@
           <div class="card-icon">📈</div>
           <h3>Capital Planificado</h3>
           <p class="card-range">Desde $20,000 MXN</p>
-          <p class="card-detail">Plazo: 6 a 36 meses</p>
-          <p class="card-desc">Flexibilidad de plazo con condiciones a tu medida. Tú eliges el horizonte de tiempo.</p>
+          <p class="card-detail">Plazo: 6 a 36 meses · Rendimiento al vencimiento</p>
+          <p class="card-desc">Flexibilidad real: tú eliges el horizonte de tiempo, de 6 hasta 36 meses. Tus rendimientos se acumulan progresivamente y el capital regresa íntegro al vencimiento. Las condiciones quedan pactadas por contrato desde el inicio, sin ajustes posteriores.</p>
           <span class="card-more">Ver más →</span>
         </a>
 
@@ -164,8 +183,8 @@
           <div class="card-icon">🛡️</div>
           <h3>Capital Protegido</h3>
           <p class="card-range">Desde $20,000 MXN</p>
-          <p class="card-detail">Plazo: 12 meses</p>
-          <p class="card-desc">Tu capital regresa completo al vencimiento. Pagos periódicos durante el plazo.</p>
+          <p class="card-detail">Plazo: 12 meses · Pagos periódicos</p>
+          <p class="card-desc">Tu capital está blindado: regresa completo al vencimiento. Durante los 12 meses de vigencia recibes retribuciones periódicas en las fechas acordadas, sin gestiones adicionales. Ideal para quienes buscan liquidez constante sin comprometer su capital base.</p>
           <span class="card-more">Ver más →</span>
         </a>
 
@@ -173,8 +192,8 @@
           <div class="card-icon">💎</div>
           <h3>Capital Superior</h3>
           <p class="card-range">Desde $1,000,000 MXN</p>
-          <p class="card-detail">Plazo y condiciones personalizadas</p>
-          <p class="card-desc">Para clientes de alto patrimonio. Estructura contractual completamente a medida.</p>
+          <p class="card-detail">Plazo y condiciones a medida · Asesor dedicado</p>
+          <p class="card-desc">Para patrimonios de alto valor. Estructura contractual completamente personalizada, negociada de forma individual con asesor dedicado. Acceso a los mejores esquemas de rendimiento de ARMEX, con seguimiento prioritario y total transparencia en cada etapa.</p>
           <span class="card-more">Ver más →</span>
         </a>
 
@@ -337,7 +356,7 @@
           </button>
           <div class="faq-answer">
             <p>Armex Capital te permite designar uno o más <strong>beneficiarios</strong> desde el momento en que firmas el contrato. En caso de fallecimiento durante la vigencia, los beneficiarios designados tendrán derecho a recibir el capital y los rendimientos devengados hasta esa fecha, una vez concluido el plazo contractual o bajo las condiciones establecidas en el acuerdo.</p>
-            <p style="margin-top:0.65rem;">El proceso de reclamo requiere presentar documentación básica como el acta de defunción y la identificación del beneficiario. Para conocer el procedimiento completo, consulta la sección de <a href="#" onclick="openModal('modal-beneficiarios');return false;" style="color:#9b95ff;">Reclamo de Beneficiarios</a> en nuestro aviso legal.</p>
+            <p style="margin-top:0.65rem;">El proceso de reclamo requiere presentar documentación básica como el acta de defunción y la identificación del beneficiario. Para conocer el procedimiento completo, consulta la sección de <a href="#" onclick="openBeneficiarios(event);return false;" style="color:#9b95ff;">Reclamo de Beneficiarios</a> en nuestro aviso legal.</p>
           </div>
         </div>
 
@@ -350,6 +369,15 @@
     <div class="container">
       <h2 class="section-title primary">Agenda una cita</h2>
       <p class="section-desc" style="color:#555;margin-bottom:2.5rem;">Selecciona la fecha y el horario de tu preferencia. Un asesor te atenderá en nuestras oficinas.</p>
+      <!-- MODALIDAD -->
+      <div class="modalidad-wrap">
+        <p class="modalidad-label">Selecciona la modalidad</p>
+        <div class="modalidad-btns">
+          <button class="mod-btn mod-active" onclick="selectModalidad('presencial', this)">🏢 Presencial</button>
+          <button class="mod-btn" onclick="selectModalidad('en_linea', this)">💻 En línea</button>
+        </div>
+      </div>
+
       <div class="citas-layout">
 
         <!-- CALENDARIO -->
@@ -387,12 +415,13 @@
               <option value="Capital Familiar Protegido">Capital Familiar Protegido</option>
               <option value="Por definir">Por definir</option>
             </select>
-            <button type="submit" class="btn-cita">Confirmar cita por WhatsApp</button>
+            <button type="submit" class="btn-cita">Confirmar cita</button>
           </form>
           <div id="cita-confirm" class="cita-confirm" style="display:none;">
             <div class="confirm-icon">✓</div>
-            <p class="confirm-text">¡Cita agendada! Te contactaremos para confirmar.</p>
-            <p style="font-size:0.78rem;color:#888;margin-top:0.5rem;text-align:center;">💡 Para visualizar correctamente el correo de confirmación, te recomendamos desactivar el <strong>modo oscuro</strong> en tu dispositivo.</p>
+            <p class="confirm-text">¡Cita confirmada!</p>
+            <p style="font-size:0.88rem;color:#555;margin-top:0.5rem;text-align:center;">Te enviaremos un correo electrónico para verificar tu cita.</p>
+            <p style="font-size:0.78rem;color:#888;margin-top:0.6rem;text-align:center;">💡 Para visualizar correctamente el correo de confirmación, te recomendamos <strong>no tener el modo noche activo</strong> al leer el correo.</p>
             <button class="btn-cita-outline" onclick="resetCita()">Agendar otra cita</button>
           </div>
         </div>
@@ -667,6 +696,13 @@
     let calDate = new Date();
     let selectedDate = null;
     let selectedTime = null;
+    let selectedModalidad = 'presencial';
+
+    function selectModalidad(mod, btn) {
+      selectedModalidad = mod;
+      document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('mod-active'));
+      btn.classList.add('mod-active');
+    }
 
     const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const DIAS_SEMANA = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -826,13 +862,15 @@
           email,
           fecha_cita: fechaISO,
           hora_cita: slotTo24h(selectedTime),
-          modalidad: 'presencial',
+          modalidad: selectedModalidad,
           servicio_interes: servicio || null,
           estatus: 'pendiente',
         }]);
 
         if (error) {
-          alert('Error al agendar la cita. Intenta de nuevo.');
+          console.error('Error al agendar cita:', error);
+          const msg = error.message || error.details || 'Error desconocido';
+          alert('Error al agendar la cita: ' + msg + '\n\nIntenta de nuevo en unos momentos.');
           submitBtn.textContent = 'Confirmar cita por WhatsApp';
           submitBtn.disabled = false;
           return;
@@ -842,7 +880,8 @@
         document.getElementById('slots-wrapper').style.display = 'none';
         document.getElementById('cita-confirm').style.display = 'flex';
       } catch (err) {
-        alert('Error de conexión. Intenta de nuevo.');
+        console.error('Error de conexión:', err);
+        alert('Error de conexión: ' + (err?.message || 'Verifica tu conexión a internet.') + '\n\nIntenta de nuevo.');
         submitBtn.textContent = 'Confirmar cita por WhatsApp';
         submitBtn.disabled = false;
       }
@@ -870,6 +909,15 @@
         item.classList.add('faq-open');
         btn.querySelector('.faq-icon').textContent = '−';
       }
+    }
+
+    function toggleMenu() {
+      const menu    = document.getElementById('mobile-menu');
+      const overlay = document.getElementById('menu-overlay');
+      const open    = menu.classList.contains('open');
+      menu.classList.toggle('open', !open);
+      overlay.classList.toggle('open', !open);
+      document.body.style.overflow = open ? '' : 'hidden';
     }
 
     document.getElementById('prev-month').onclick = () => { calDate.setMonth(calDate.getMonth()-1); renderCalendar(); };
