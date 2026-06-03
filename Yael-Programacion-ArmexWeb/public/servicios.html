@@ -7,84 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    .srv-hero {
-      min-height: 38vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 7rem 2rem 4rem;
-      background: linear-gradient(135deg, #0D1117 0%, #161B22 60%, #0D1117 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .srv-hero::before {
-      content: '';
-      position: absolute;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(15,11,119,0.2) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-    }
-    .srv-hero-content { position: relative; z-index: 1; }
-    .srv-hero h1 {
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 0.8rem;
-    }
-    .srv-hero p {
-      font-size: 1rem;
-      color: #8B949E;
-      max-width: 600px;
-      line-height: 1.8;
-    }
-
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.2rem;
-      border: 1px solid rgba(15,11,119,0.3);
-      border-radius: 4px;
-      color: #0f0b77;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-decoration: none;
-      background: #fff;
-      transition: background 0.2s, color 0.2s;
-      position: absolute;
-      top: 1.4rem;
-      left: 2rem;
-      z-index: 10;
-    }
-    .back-btn:hover { background: #0f0b77; color: #fff; }
-
-    /* NAV SERVICIOS */
-    .srv-nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      padding: 1.8rem 2rem;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-    .srv-nav a {
-      padding: 0.5rem 1.2rem;
-      border-radius: 30px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: #0f0b77;
-      border: 1px solid rgba(15,11,119,0.25);
-      transition: background 0.2s, color 0.2s;
-      letter-spacing: 0.5px;
-    }
-    .srv-nav a:hover { background: #0f0b77; color: #fff; }
+    /* NAV SERVICIOS eliminado */
 
     /* SECCIONES DE PRODUCTO */
     .srv-section {
@@ -329,31 +252,15 @@
       .srv-inner { grid-template-columns: 1fr !important; gap: 2rem; }
       .srv-section:nth-child(even) .srv-text,
       .srv-section:nth-child(even) .srv-visual { order: unset; }
-      .srv-hero h1 { font-size: 1.8rem; }
       .srv-card-visual { max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <a href="/" class="back-btn">← Volver al inicio</a>
-
-  <!-- HERO -->
-  <div class="srv-hero">
-    <div class="srv-hero-content">
-      <p class="hero-sub" style="margin-bottom:1rem;">Armex Capital</p>
-      <h1>Nuestros Servicios</h1>
-      <p>Cada servicio está diseñado para adaptarse a tu etapa patrimonial. Conoce cuál es el más adecuado para tus objetivos.</p>
-    </div>
+  <div style="padding:1rem 2rem;background:#fff;border-bottom:1px solid #eee;">
+    <a href="/" style="display:inline-flex;align-items:center;gap:0.4rem;color:#0f0b77;font-size:0.8rem;font-weight:700;text-decoration:none;font-family:'Montserrat',sans-serif;">← Volver al inicio</a>
   </div>
-
-  <!-- NAV INTERNO -->
-  <nav class="srv-nav">
-    <a href="#capital-impulso">Capital Impulso</a>
-    <a href="#capital-planificado">Capital Planificado</a>
-    <a href="#capital-protegido">Capital Protegido</a>
-    <a href="#capital-superior">Capital Superior</a>
-  </nav>
 
   <!-- CAPITAL IMPULSO -->
   <section id="capital-impulso" class="srv-section srv-animate">

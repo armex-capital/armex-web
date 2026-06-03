@@ -1205,7 +1205,9 @@ footer p {
   width: 78%;
   max-width: 300px;
   height: 100vh;
-  background: #fff;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 150;
   padding: 2rem 1.5rem;
   box-shadow: -4px 0 30px rgba(0,0,0,0.15);

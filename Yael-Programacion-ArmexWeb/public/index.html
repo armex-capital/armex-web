@@ -373,8 +373,8 @@
       <div class="modalidad-wrap">
         <p class="modalidad-label">Selecciona la modalidad</p>
         <div class="modalidad-btns">
-          <button class="mod-btn mod-active" onclick="selectModalidad('presencial', this)">🏢 Presencial</button>
-          <button class="mod-btn" onclick="selectModalidad('en_linea', this)">💻 En línea</button>
+          <button class="mod-btn mod-active" onclick="selectModalidad('Presencial', this)">🏢 Presencial</button>
+          <button class="mod-btn" onclick="selectModalidad('En línea', this)">💻 En línea</button>
         </div>
       </div>
 
@@ -696,7 +696,7 @@
     let calDate = new Date();
     let selectedDate = null;
     let selectedTime = null;
-    let selectedModalidad = 'presencial';
+    let selectedModalidad = 'Presencial';
 
     function selectModalidad(mod, btn) {
       selectedModalidad = mod;
