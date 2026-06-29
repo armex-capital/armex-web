@@ -222,6 +222,10 @@ app.post('/api/reservar-cita', async (req, res) => {
 });
 
 /* ── RUTAS ── */
+app.get('/verificar/:token', (req, res) => {
+  res.redirect(301, `/verificar/?t=${req.params.token.toUpperCase()}`);
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
