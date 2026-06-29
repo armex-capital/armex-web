@@ -1,1 +1,2 @@
 # Redirects
+/verificar/:token  /verificar/?t=:token  301
