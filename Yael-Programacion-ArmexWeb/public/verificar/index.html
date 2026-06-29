@@ -244,7 +244,7 @@
           scanner.stop().then(() => { scanner = null })
           const match = decodedText.match(/[#/]([A-Za-z0-9]{8,})$/)
           const token = match ? match[1] : decodedText.trim()
-          if (token) window.location.href = `/verificar/#${token.toUpperCase()}`
+          if (token) window.location.href = `/verificar/?t=${token.toUpperCase()}`
         },
         () => {}
       ).catch(() => {
@@ -262,7 +262,9 @@
     }
 
     async function verificar() {
-      const token = (window.location.hash.replace('#', '') || '').toUpperCase()
+      const hash = window.location.hash.replace('#', '')
+      const params = new URLSearchParams(window.location.search)
+      const token = (hash || params.get('t') || '').toUpperCase()
       const body = document.getElementById('card-body')
 
       if (!token) {
@@ -327,6 +329,7 @@
     }
 
     verificar()
+    window.addEventListener('hashchange', verificar)
   </script>
 </body>
 </html>
